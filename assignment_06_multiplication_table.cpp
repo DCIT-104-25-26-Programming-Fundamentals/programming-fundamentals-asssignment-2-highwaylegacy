@@ -57,3 +57,83 @@
 #include <iostream>
 using namespace std;
 
+#include <iostream>
+#include <iomanip>
+
+// =============================================================================
+// FUNCTION IMPLEMENTATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// PART A — Single Table
+// -----------------------------------------------------------------------------
+// Prints the multiplication table for a single number from 1 to 12.
+void printSingleTable(int n) {
+    std::cout << "Multiplication Table for " << n << ":\n";
+    for (int i = 1; i <= 12; ++i) {
+        std::cout << n << "  x  " 
+                  << std::left << std::setw(2) << i 
+                  << " =  " << (n * i) << std::endl;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// PART B — Bonus: Tables from 1 to N
+// -----------------------------------------------------------------------------
+// Prints full multiplication tables for every number from 1 to N,
+// separated by a divider line.
+void printTablesUpToN(int n) {
+    for (int i = 1; i <= n; ++i) {
+        printSingleTable(i);
+        if (i < n) {
+            std::cout << "---------------------------\n";
+        }
+    }
+}
+
+// =============================================================================
+// MAIN FUNCTION
+// =============================================================================
+int main() {
+    // -------------------------------------------------------------------------
+    // DEMONSTRATE PART A: Single Table
+    // -------------------------------------------------------------------------
+    std::cout << "=================================================\n";
+    std::cout << " PART A — Single Table\n";
+    std::cout << "=================================================\n";
+
+    int singleNum;
+    std::cout << "Enter a number for its multiplication table: ";
+    std::cin >> singleNum;
+
+    // Validate positive integer
+    if (singleNum <= 0) {
+        std::cout << "Error: Number must be a positive integer." << std::endl;
+        return 1;
+    }
+
+    std::cout << std::endl;
+    printSingleTable(singleNum);
+
+    // -------------------------------------------------------------------------
+    // DEMONSTRATE PART B: Tables from 1 to N
+    // -------------------------------------------------------------------------
+    std::cout << "\n=================================================\n";
+    std::cout << " PART B — Bonus: Tables from 1 to N\n";
+    std::cout << "=================================================\n";
+
+    int maxNum;
+    std::cout << "Enter N to generate tables from 1 to N: ";
+    std::cin >> maxNum;
+
+    // Validate positive integer
+    if (maxNum <= 0) {
+        std::cout << "Error: Number must be a positive integer." << std::endl;
+        return 1;
+    }
+
+    std::cout << std::endl;
+    printTablesUpToN(maxNum);
+
+    return 0;
+}
