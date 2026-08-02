@@ -80,3 +80,129 @@
 #include <string>
 using namespace std;
 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <limits>
+
+// =============================================================================
+// FUNCTION IMPLEMENTATIONS
+// =============================================================================
+
+// Displays the To-Do List application menu
+void displayMenu() {
+    std::cout << "\n============================\n";
+    std::cout << "     TO-DO LIST MENU\n";
+    std::cout << "============================\n";
+    std::cout << "1. Add task\n";
+    std::cout << "2. View tasks\n";
+    std::cout << "3. Delete task\n";
+    std::cout << "4. Quit\n";
+    std::cout << "Enter your choice (1-4): ";
+}
+
+// -----------------------------------------------------------------------------
+// FEATURE 1 — Add a Task
+// -----------------------------------------------------------------------------
+// Prompts the user for a task description and adds it to the list.
+void addTask(std::vector<std::string>& tasks) {
+    std::string taskDescription;
+    std::cout << "Enter task: ";
+    std::getline(std::cin, taskDescription);
+
+    if (taskDescription.empty()) {
+        std::cout << "Error: Task description cannot be empty.\n";
+        return;
+    }
+
+    tasks.push_back(taskDescription);
+    std::cout << "Task added: \"" << taskDescription << "\"" << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// FEATURE 2 — View All Tasks
+// -----------------------------------------------------------------------------
+// Displays all current tasks numbered from 1, or a friendly message if empty.
+void viewTasks(const std::vector<std::string>& tasks) {
+    if (tasks.empty()) {
+        std::cout << "Your to-do list is empty!\n";
+        return;
+    }
+
+    std::cout << "Your Tasks:\n";
+    for (size_t i = 0; i < tasks.size(); ++i) {
+        std::cout << (i + 1) << ". " << tasks[i] << std::endl;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// FEATURE 3 — Delete a Task
+// -----------------------------------------------------------------------------
+// Shows the tasks and removes the user-specified task number.
+void deleteTask(std::vector<std::string>& tasks) {
+    if (tasks.empty()) {
+        std::cout << "No tasks available to delete.\n";
+        return;
+    }
+
+    // Show the list of tasks with their numbers
+    viewTasks(tasks);
+
+    int taskNumber;
+    std::cout << "Enter task number to delete: ";
+    std::cin >> taskNumber;
+
+    // Handle invalid input type or out-of-range task number
+    if (std::cin.fail() || taskNumber < 1 || taskNumber > static_cast<int>(tasks.size())) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Error: Invalid task number.\n";
+        return;
+    }
+
+    // Clear leftover newline character after reading the integer
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+    std::string removedTask = tasks[taskNumber - 1];
+    tasks.erase(tasks.begin() + (taskNumber - 1));
+    std::cout << "Task \"" << removedTask << "\" has been removed." << std::endl;
+}
+
+// =============================================================================
+// MAIN FUNCTION
+// =============================================================================
+int main() {
+    std::vector<std::string> tasks;
+    int choice = 0;
+
+    while (true) {
+        displayMenu();
+        std::cin >> choice;
+
+        // Handle non-integer input gracefully
+        if (std::cin.fail()) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+            continue;
+        }
+
+        // Clear the trailing newline character from the buffer
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+        if (choice == 1) {
+            addTask(tasks);
+        } else if (choice == 2) {
+            viewTasks(tasks);
+        } else if (choice == 3) {
+            deleteTask(tasks);
+        } else if (choice == 4) {
+            std::cout << "Goodbye!" << std::endl;
+            break;
+        } else {
+            std::cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+        }
+    }
+
+    return 0;
+}
