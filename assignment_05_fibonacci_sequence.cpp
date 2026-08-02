@@ -51,3 +51,96 @@
 #include <iostream>
 using namespace std;
 
+#include <iostream>
+
+// =============================================================================
+// FUNCTION IMPLEMENTATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// PART A — Print the First N Terms
+// -----------------------------------------------------------------------------
+// Generates and prints the first N Fibonacci numbers on a single line using a loop.
+void printFibonacci(int n) {
+    long long first = 0;
+    long long second = 1;
+
+    std::cout << "Fibonacci sequence:";
+
+    for (int i = 1; i <= n; ++i) {
+        if (i == 1) {
+            std::cout << " " << first;
+        } else if (i == 2) {
+            std::cout << " " << second;
+        } else {
+            long long next = first + second;
+            std::cout << " " << next;
+            first = second;
+            second = next;
+        }
+    }
+    std::cout << std::endl;
+}
+
+// -----------------------------------------------------------------------------
+// PART B — Check if a Number Belongs to the Sequence
+// -----------------------------------------------------------------------------
+// Determines whether a given number is part of the Fibonacci sequence using a loop.
+bool isFibonacci(long long num) {
+    if (num < 0) {
+        return false;
+    }
+    if (num == 0 || num == 1) {
+        return true;
+    }
+
+    long long first = 0;
+    long long second = 1;
+    long long next = first + second;
+
+    while (next <= num) {
+        if (next == num) {
+            return true;
+        }
+        first = second;
+        second = next;
+        next = first + second;
+    }
+
+    return false;
+}
+
+// =============================================================================
+// MAIN FUNCTION
+// =============================================================================
+int main() {
+    // -------------------------------------------------------------------------
+    // DEMONSTRATE PART A: Print the First N Terms
+    // -------------------------------------------------------------------------
+    int n;
+    std::cout << "How many terms? ";
+    std::cin >> n;
+
+    // Validate that N is a positive integer
+    if (n <= 0) {
+        std::cout << "Error: Number of terms must be a positive integer." << std::endl;
+        return 1;
+    }
+
+    printFibonacci(n);
+
+    // -------------------------------------------------------------------------
+    // DEMONSTRATE PART B: Check if a Number Belongs to the Sequence
+    // -------------------------------------------------------------------------
+    long long checkNum;
+    std::cout << "\nEnter a number to check: ";
+    std::cin >> checkNum;
+
+    if (isFibonacci(checkNum)) {
+        std::cout << checkNum << " is a Fibonacci number." << std::endl;
+    } else {
+        std::cout << checkNum << " is NOT a Fibonacci number." << std::endl;
+    }
+
+    return 0;
+}
