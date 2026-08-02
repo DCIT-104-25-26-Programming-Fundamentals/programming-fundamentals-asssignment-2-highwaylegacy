@@ -46,3 +46,51 @@
 #include <iostream>
 using namespace std;
 
+#include <iostream>
+
+// =============================================================================
+// FUNCTION IMPLEMENTATION
+// =============================================================================
+// Determines the letter grade for a given student score.
+// Returns '\0' (null character) if the score is out of the valid range [0, 100].
+char getGrade(int score) {
+    // Validate score is within [0, 100]
+    if (score < 0 || score > 100) {
+        return '\0';
+    }
+    
+    // Determine letter grade using if / else if / else
+    if (score >= 80) {
+        return 'A';
+    } else if (score >= 70) {
+        return 'B';
+    } else if (score >= 60) {
+        return 'C';
+    } else if (score >= 50) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
+
+// =============================================================================
+// MAIN FUNCTION
+// =============================================================================
+int main() {
+    int score;
+
+    // Prompt user for score
+    std::cout << "Enter student score (0-100): ";
+    std::cin >> score;
+
+    // Call getGrade() and handle output or out-of-range error
+    char grade = getGrade(score);
+
+    if (grade == '\0') {
+        std::cout << "Error: Score must be between 0 and 100." << std::endl;
+    } else {
+        std::cout << "Grade: " << grade << std::endl;
+    }
+
+    return 0;
+}
