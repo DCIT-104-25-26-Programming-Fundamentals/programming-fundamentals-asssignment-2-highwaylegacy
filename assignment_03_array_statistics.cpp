@@ -42,3 +42,84 @@
 #include <iostream>
 using namespace std;
 
+#include <iostream>
+
+// =============================================================================
+// FUNCTION IMPLEMENTATIONS
+// =============================================================================
+
+// Computes the sum of all elements in the array using a loop
+double computeSum(const double arr[], int size) {
+    double sum = 0.0;
+    for (int i = 0; i < size; ++i) {
+        sum += arr[i];
+    }
+    return sum;
+}
+
+// Computes the average of all elements in the array
+double computeAverage(const double arr[], int size) {
+    if (size <= 0) {
+        return 0.0;
+    }
+    return computeSum(arr, size) / size;
+}
+
+// Finds the maximum value in the array using a loop
+double findMax(const double arr[], int size) {
+    double maxVal = arr[0];
+    for (int i = 1; i < size; ++i) {
+        if (arr[i] > maxVal) {
+            maxVal = arr[i];
+        }
+    }
+    return maxVal;
+}
+
+// Finds the minimum value in the array using a loop
+double findMin(const double arr[], int size) {
+    double minVal = arr[0];
+    for (int i = 1; i < size; ++i) {
+        if (arr[i] < minVal) {
+            minVal = arr[i];
+        }
+    }
+    return minVal;
+}
+
+// =============================================================================
+// MAIN FUNCTION
+// =============================================================================
+int main() {
+    int n;
+
+    std::cout << "How many numbers? ";
+    std::cin >> n;
+
+    // Validate that N is a positive integer
+    if (n <= 0) {
+        std::cout << "Error: Number of elements must be a positive integer." << std::endl;
+        return 1;
+    }
+
+    // Dynamically allocate array for N elements
+    double* numbers = new double[n];
+
+    // Read elements from user
+    for (int i = 0; i < n; ++i) {
+        std::cout << "Enter number " << (i + 1) << ": ";
+        std::cin >> numbers[i];
+    }
+
+    // Print results
+    std::cout << "\nResults:\n";
+    std::cout << "Sum:    " << computeSum(numbers, n) << std::endl;
+    std::cout << "Average: " << computeAverage(numbers, n) << std::endl;
+    std::cout << "Maximum: " << findMax(numbers, n) << std::endl;
+    std::cout << "Minimum: " << findMin(numbers, n) << std::endl;
+
+    // Clean up dynamically allocated memory
+    delete[] numbers;
+
+    return 0;
+}
